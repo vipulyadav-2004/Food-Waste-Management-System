@@ -1,8 +1,11 @@
 import sqlite3
 import pandas as pd
 from datetime import datetime
+from pathlib import Path
 
-DB_NAME = 'food_waste.db'
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+DATA_DIR = PROJECT_ROOT / 'data' / 'cleaned_data'
+DB_NAME = str(PROJECT_ROOT / 'food_waste.db')
 
 
 def _build_food_filter_clause(filters=None, alias=''):
@@ -65,8 +68,8 @@ def init_db():
     if cursor.fetchone()[0] == 0:
         try:
             # 1. Process Food + Providers
-            food_df = pd.read_csv('../data/cleaned_data/food_listings_cleaned.csv')
-            prov_df = pd.read_csv('../data/cleaned_data/providers_cleaned.csv')
+            food_df = pd.read_csv(DATA_DIR / 'food_listings_cleaned.csv')
+            prov_df = pd.read_csv(DATA_DIR / 'providers_cleaned.csv')
             
             food_master = pd.merge(food_df, prov_df, on='Provider_ID', how='left')
             food_master = food_master.rename(columns={'Name': 'Provider_Name'})
@@ -78,8 +81,8 @@ def init_db():
             food_master[cols_food].to_sql('food_listings', conn, if_exists='append', index=False)
 
             # 2. Process Claims + Receivers
-            claims_df = pd.read_csv('../data/cleaned_data/claims_cleaned.csv')
-            recv_df = pd.read_csv('../data/cleaned_data/receivers_cleaned.csv')
+            claims_df = pd.read_csv(DATA_DIR / 'claims_cleaned.csv')
+            recv_df = pd.read_csv(DATA_DIR / 'receivers_cleaned.csv')
             
             claims_master = pd.merge(claims_df, recv_df, on='Receiver_ID', how='left')
             claims_master = claims_master.rename(columns={'Name': 'Receiver_Name', 'Type': 'Receiver_Type', 
@@ -93,7 +96,7 @@ def init_db():
             
             print("Successfully initialized two-table system with ID preservation.")
         except Exception as e:
-            print(f"Migration Error: {e}")
+            raise RuntimeError(f"Database seed failed from {DATA_DIR}: {e}") from e
         
     conn.commit()
     conn.close()
