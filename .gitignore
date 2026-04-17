@@ -1,0 +1,89 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environments
+p4env/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE & Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+*.sublime-project
+*.sublime-workspace
+
+# Streamlit
+.streamlit/
+.streamlit_cache/
+.streamlit_cache3/
+.streamlit/logger/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+food_waste.db
+
+# Environment Variables
+.env
+.env.local
+.env.*.local
+
+# OS Files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Logs
+*.log
+logs/
+*.pot
+
+# Temporary Files
+*.tmp
+*.temp
+*.bak
+*.swp
+.cache/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# VS Code Extensions
+extensions/
+
+# Node modules (if any)
+node_modules/
+
+# Data files (keep clean datasets, ignore generated/cached data)
+data/*.csv
+!data/cleaned_data/*.csv
